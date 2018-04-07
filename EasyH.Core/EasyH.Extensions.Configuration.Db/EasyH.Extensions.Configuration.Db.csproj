@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CacheManager.Microsoft.Extensions.Caching.Memory" Version="1.1.2" />
+    <PackageReference Include="CacheManager.Microsoft.Extensions.Configuration" Version="1.1.2" />
+    <PackageReference Include="CacheManager.Serialization.Json" Version="1.1.2" />
+    <PackageReference Include="CacheManager.StackExchange.Redis" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.1" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if not exist &quot;$(ProjectDir)..\Outputs&quot; md &quot;$(ProjectDir)..\Outputs&quot;&#xD;&#xA;copy &quot;$(TargetDir)&quot; &quot;$(ProjectDir)..\Outputs&quot;" />
+  </Target>
+
+</Project>

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Autofac.Configuration" Version="4.0.1" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EasyH.Core.DependencyInjection\EasyH.Core.DependencyInjection.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if not exist &quot;$(ProjectDir)..\Outputs&quot; md &quot;$(ProjectDir)..\Outputs&quot;&#xD;&#xA;copy &quot;$(TargetDir)&quot; &quot;$(ProjectDir)..\Outputs&quot;" />
+  </Target>
+
+</Project>
