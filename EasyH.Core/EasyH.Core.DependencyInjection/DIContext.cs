@@ -7,12 +7,12 @@ namespace EasyH.Core.DependencyInjection
     /// <summary>
     /// 依赖注入上下文
     /// </summary>
-    public class DIContext
+    public class DiContext
     {
         /// <summary>
         /// 全局依赖注入上下文
         /// </summary>
-        public static DIContext Instance { get; private set; }
+        public static DiContext Instance { get; private set; }
 
         /// <summary>
         /// 类型查找器
@@ -24,7 +24,7 @@ namespace EasyH.Core.DependencyInjection
         /// </summary>
         private string _name;
 
-        internal DIContext()
+        internal DiContext()
         {
         }
 
@@ -38,7 +38,7 @@ namespace EasyH.Core.DependencyInjection
         /// <param name="container">依赖注入容器</param>
         /// <param name="configFileName">配置文件名</param>
         /// <returns>依赖注入上下文</returns>
-        public static DIContext Create(string name = "Default", IDIContainer container = null, string configFileName = "")
+        public static DiContext Create(string name = "Default", IDIContainer container = null, string configFileName = "")
         {
             //是否为创建默认依赖注入上下文
             if (string.IsNullOrWhiteSpace(name) || name.Equals("DEFAULT", StringComparison.CurrentCultureIgnoreCase))
@@ -48,24 +48,24 @@ namespace EasyH.Core.DependencyInjection
                 {
                     throw new NotSupportedException("Could not create Default instance twice.");
                 }
-                Instance = new DIContext();
+                Instance = new DiContext();
                 TypeFinder = new ContainerTypeFinder();
                 Instance.SetContainer(container);
                 return Instance;
             }
 
             //下级依赖注入上下文创建之前必须创建默认依赖注入上下文
-            if (Instance == null || Instance.Container == null)
+            if (Instance?.Container == null)
             {
                 throw new NullReferenceException("Could not create configuration instance with base instance is null.");
             }
-            var diContext = Instance.Container.ServiceProvider.GetServices<DIContext>();
+            var diContext = Instance.Container.ServiceProvider.GetServices<DiContext>();
             if (false)
             {
                 throw new NotSupportedException("Could not create configuration instance twice.");
             }
 
-            var instance = new DIContext
+            var instance = new DiContext
             {
                 _name = name
             };
@@ -90,7 +90,7 @@ namespace EasyH.Core.DependencyInjection
             return instance;
         }
 
-        public static DIContext Load(string name = "Default")
+        public static DiContext Load(string name = "Default")
         {
             if (string.IsNullOrWhiteSpace(name) || name.Equals("DEFAULT", StringComparison.CurrentCultureIgnoreCase))
             {
@@ -113,7 +113,7 @@ namespace EasyH.Core.DependencyInjection
         /// <param name="container">依赖注入容器</param>
         /// <param name="configFileName">配置文件名称</param>
         /// <returns>依赖注入上下文</returns>
-        public DIContext SetContainer(IDIContainer container, string configFileName = "")
+        public DiContext SetContainer(IDIContainer container, string configFileName = "")
         {
             if (container != null)
             {
@@ -126,7 +126,7 @@ namespace EasyH.Core.DependencyInjection
             return this;
         }
 
-        public DIContext RegisterUnhandledExceptionHandler()
+        public DiContext RegisterUnhandledExceptionHandler()
         {
             AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
             {
@@ -139,7 +139,7 @@ namespace EasyH.Core.DependencyInjection
         /// 生成依赖注入容器
         /// </summary>
         /// <returns></returns>
-        public DIContext Build()
+        public DiContext Build()
         {
             //生成依赖注入容器之前必须创建依赖注入上下文
             if (Instance == null || Instance.Container == null)

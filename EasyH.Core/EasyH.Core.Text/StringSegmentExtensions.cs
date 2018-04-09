@@ -8,10 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using EasyH.Core.Text.Json;
 
-#if NETSTANDARD2_0
-using Microsoft.Extensions.Primitives;
-#endif
-
 namespace EasyH.Core.Text
 {
     public static class StringSegmentExtensions

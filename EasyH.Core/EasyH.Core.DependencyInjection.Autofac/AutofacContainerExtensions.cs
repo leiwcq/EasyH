@@ -9,7 +9,7 @@ namespace EasyH.Core.DependencyInjection.Autofac
         /// Use Autofac as the object container.
         /// </summary>
         /// <returns></returns>
-        public static DIContext UseAutofac(this DIContext diContext)
+        public static DiContext UseAutofac(this DiContext diContext)
         {
             return diContext.UseAutofac(new ContainerBuilder());
         }
@@ -17,7 +17,7 @@ namespace EasyH.Core.DependencyInjection.Autofac
         /// Use Autofac as the object container.
         /// </summary>
         /// <returns></returns>
-        public static DIContext UseAutofac(this DIContext diContext, ContainerBuilder containerBuilder)
+        public static DiContext UseAutofac(this DiContext diContext, ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<AutofacContainer>().As<IDIContainer>();
             diContext.SetContainer(new AutofacContainer(containerBuilder));
